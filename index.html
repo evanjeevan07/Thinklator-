@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thinklator ‑ மாத வட்டி கணிப்பான்</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Font for Brand -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <!-- html2canvas & jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600&display=swap');
+    body { font-family: 'Mukta Malar', sans-serif; }
+    .brand { font-family: 'Pacifico', cursive; }
+    .shimmer{
+      background:linear-gradient(90deg,#4ade80,#22c55e,#4ade80);
+      background-size:200% 100%;animation:shimmer 2s infinite;color:white;
+    }
+    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    .footer-animate{border-top:2px solid;border-image:linear-gradient(to right,#16a34a,#86efac);border-image-slice:1}
+  </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex flex-col justify-between text-gray-800">
+
+  <!-- Header / Brand -->
+  <header class="text-center mt-6">
+    <h1 class="brand text-4xl text-green-700 drop-shadow-sm">Thinklator</h1>
+    <p class="text-green-800 font-semibold">மாத வட்டி கணிப்பான்</p>
+  </header>
+
+  <main class="flex justify-center mt-8 px-4">
+    <!-- Calculator Card -->
+    <div id="calcCard" class="bg-white p-6 rounded-3xl shadow-md w-full max-w-md space-y-6">
+      <div class="space-y-5">
+        <div>
+          <label class="block text-green-700 font-bold">முதலீடு தொகை (₹)</label>
+          <input id="amount" type="number"
+                 class="w-full border-b-2 border-green-500 focus:outline-none p-1 bg-transparent text-green-900" />
+        </div>
+
+        <div>
+          <label class="block text-green-700 font-bold">மாத வட்டி விகிதம் (%)</label>
+          <input id="rate" type="number" step="0.01"
+                 class="w-full border-b-2 border-green-500 focus:outline-none p-1 bg-transparent text-green-900" />
+        </div>
+
+        <div>
+          <label class="block text-green-700 font-bold">கால அவகாசம் (மாதங்களில்)</label>
+          <input id="months" type="number"
+                 class="w-full border-b-2 border-green-500 focus:outline-none p-1 bg-transparent text-green-900" />
+        </div>
+      </div>
+
+      <button onclick="calculate()"
+              class="shimmer w-full py-2 rounded-xl font-semibold mt-2">கணக்கிடு</button>
+
+      <!-- Results -->
+      <div id="resultSection" class="mt-6"></div>
+
+      <!-- PDF Download -->
+      <button onclick="downloadPDF()"
+              class="w-full bg-green-600 hover:bg-green-700 text-white rounded-xl py-2 font-semibold">
+        Download PDF
+      </button>
+    </div>
+  </main>
+
+  <footer class="bg-green-100 text-green-800 text-center py-3 mt-10 footer-animate">
+    அனைத்தும் உரிமைகள் பாதுகாக்கப்பட்டவை © Thinklator
+  </footer>
+
+  <script>
+    /* ---------- Tamil Number Words Helpers ---------- */
+    const UNITS = ["","ஒன்று","இரண்டு","மூன்று","நான்கு","ஐந்து","ஆறு","ஏழு","எட்டு","ஒன்பது"];
+    const TENS_WORDS = ["","பத்து","இருபது","முப்பது","நாப்பது","ஐம்பது","அறுபது","எழுபது","எண்பது","தொண்ணூறு"];
+
+    function belowHundred(n){
+      if(n<10) return UNITS[n];
+      if(n<20){
+        const teen = {11:"பதினொன்று",12:"பதினிரண்டு",13:"பதின்மூன்று",14:"பதினான்கு",
+                      15:"பதினைந்து",16:"பதினாறு",17:"பதினேழு",18:"பதினெட்டு",19:"பத்தொன்பது"};
+        return n===10?"பத்து":teen[n];
+      }
+      const t=Math.floor(n/10), u=n%10;
+      return TENS_WORDS[t] + (u?` ${UNITS[u]}`:"");
+    }
+    function belowThousand(n){
+      const h=Math.floor(n/100), r=n%100;
+      return (h?`${UNITS[h]} நூறு${r?" ":""}`:"") + (r?belowHundred(r):"");
+    }
+    function formatToTamilWords(num){
+      if(isNaN(num)||num<0) return "தவறான பதிவு";
+      if(num===0) return "பூஜ்யம்";
+      const crore=Math.floor(num/1e7),
+            lakh=Math.floor(num%1e7/1e5),
+            thousand=Math.floor(num%1e5/1e3),
+            rest=num%1e3;
+      const parts=[];
+      if(crore)   parts.push(`${belowThousand(crore)} கோடி`);
+      if(lakh)    parts.push(`${belowThousand(lakh)} லட்சம்`);
+      if(thousand)parts.push(`${belowThousand(thousand)} ஆயிரம்`);
+      if(rest)    parts.push(belowThousand(rest));
+      return parts.join(" ") + " ரூபாய்";
+    }
+
+    /* ---------- Calculator ---------- */
+    function calculate(){
+      const amount=parseFloat(document.getElementById('amount').value);
+      const rate=parseFloat(document.getElementById('rate').value);
+      const months=parseInt(document.getElementById('months').value);
+      if(!amount||!rate||!months) return;
+
+      const monthlyInterest=(amount*rate)/100;
+      const totalInterest=monthlyInterest*months;
+      const totalAmount=amount+totalInterest;
+
+      document.getElementById('resultSection').innerHTML=`
+        <div class="bg-green-100 p-4 rounded-xl text-green-900 mb-4 shadow space-y-2">
+          <div class="text-xl font-bold mb-2">எண்களில்</div>
+          <hr class="border border-green-300 mb-2" />
+          <p>முதலீடு: ₹${amount.toLocaleString()}</p>
+          <p>மாதாந்திர வட்டி: ₹${monthlyInterest.toLocaleString()}</p>
+          <p>மொத்த வட்டி: ₹${totalInterest.toLocaleString()}</p>
+          <p>மொத்த தொகை: ₹${totalAmount.toLocaleString()}</p>
+        </div>
+        <div class="bg-green-100 p-4 rounded-xl text-green-900 shadow space-y-2">
+          <div class="text-xl font-bold mb-2">தமிழில்</div>
+          <hr class="border border-green-300 mb-2" />
+          <p>முதலீடு: ${formatToTamilWords(amount)}</p>
+          <p>மாதாந்திர வட்டி: ${formatToTamilWords(monthlyInterest)}</p>
+          <p>மொத்த வட்டி: ${formatToTamilWords(totalInterest)}</p>
+          <p>மொத்த தொகை: ${formatToTamilWords(totalAmount)}</p>
+        </div>`;
+    }
+
+    /* ---------- PDF Export ---------- */
+    async function downloadPDF(){
+      const resultNode=document.getElementById('calcCard');
+      if(!document.getElementById('resultSection').innerHTML.trim())
+        return alert("முதலில் கணக்கிடுங்கள்!");
+      const canvas=await html2canvas(resultNode,{scale:2});
+      const imgData=canvas.toDataURL("image/png");
+
+      const { jsPDF } = window.jspdf;
+      const pdf=new jsPDF({orientation:"p",unit:"pt",format:"a4"});
+      const pageWidth=pdf.internal.pageSize.getWidth();
+      const ratio=pageWidth/canvas.width;
+      const imgHeight=canvas.height*ratio;
+      pdf.addImage(imgData,"PNG",0,20,pageWidth,imgHeight);
+      pdf.save("Thinklator-Vatthi-Calculator.pdf");
+    }
+  </script>
+</body>
+</html>
