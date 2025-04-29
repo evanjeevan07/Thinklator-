@@ -9,26 +9,33 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mukta+Malar:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Pacifico&family=Mukta+Malar:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     body {
       font-family: 'Mukta Malar', sans-serif;
     }
-    .bebas {
-      font-family: 'Bebas Neue', cursive;
-      letter-spacing: 1px;
+
+    .brand-text {
+      font-family: 'Abril Fatface', cursive;
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: white;
+      margin-left: -10px;
     }
+
     .shimmer {
       background: linear-gradient(90deg, #4ade80, #22c55e, #4ade80);
       background-size: 200% 100%;
       animation: shimmer 2s infinite;
       color: #fff;
     }
+
     @keyframes shimmer {
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
+
     .footer-animate {
       border-top: 2px solid;
       border-image: linear-gradient(to right, #16a34a, #86efac);
@@ -58,12 +65,12 @@
       z-index: 1;
       display: flex;
       align-items: center;
-      height: 100%;
     }
 
     .brand img {
       height: 36px;
       margin-left: 10px;
+      margin-right: 8px;
     }
 
     .nav-content {
@@ -78,22 +85,24 @@
 
   <!-- Navigation Bar -->
   <nav class="nav-with-slide text-white py-3 px-6 flex items-center justify-between shadow-md">
-    <div class="text-3x1 font-bold tracking-wide brand">
+    <div class="brand">
       <img src="https://assets.onecompiler.app/3zky9aw9p/43fpymfcg/20250422_195741.png" alt="Thinklator Logo">
+   <span class="brand-text font-bold text-white text-xl ml-[127px]" style="font-family: 'Abril Fatface', cursive;">Thinklator</span>
     </div>
-    <div class="space-x-4 text-sm sm:text-base nav-content"></div>
+    <div class="space-x-4 text-sm sm:text-base nav-content">
+      <!-- Navigation links (optional) -->
+    </div>
   </nav>
 
   <!-- Header -->
   <header class="text-center mt-6 select-none">
-    <h1 class="bebas text-green-800 text-4xl sm:text-5xl">Thinklator</h1>
-    <p class="bebas text-green-800 text-xl sm:text-2xl -mt-1">மாத வட்டி கணிப்பான்</p>
+<h1 class="text-green-800 font-bold text-xl -mt-5" style="font-family: 'Abril Fatface', cursive;">Your Welcome</h1>
+    <p class="text-green-800 font-bold -mt-1">மாத வட்டி கணிப்பான்</p>
   </header>
 
-  <!-- Calculator Card -->
+  <!-- Calculator -->
   <main class="flex justify-center mt-8 px-4">
     <div id="calcCard" class="bg-white p-6 rounded-3xl shadow-md w-full max-w-md space-y-6">
-
       <!-- Inputs -->
       <div class="space-y-5">
         <div>
@@ -114,8 +123,9 @@
       </div>
 
       <!-- Button -->
-      <button onclick="calculate()"
-        class="shimmer w-full py-3 rounded-xl font-semibold tracking-wide">கணக்கிடு</button>
+      <button onclick="calculate()" class="shimmer w-full py-3 rounded-xl font-semibold tracking-wide">
+        கணக்கிடு
+      </button>
 
       <!-- Results -->
       <div id="resultSection" class="mt-6 space-y-6"></div>
@@ -124,7 +134,7 @@
 
   <!-- Footer -->
   <footer class="bg-green-100 text-green-800 text-center py-3 mt-10 footer-animate">
-    <a href="https://evanjeevan07.github.io/Portfolio/">Developed By 𝙴𝚅 𝚂𝙰𝙽𝙹𝙴𝙴𝚅𝙰𝙽</a>
+    <a href="https://evanjeevan07.github.io/Portfolio/">Devloped By 𝙴𝚅 𝚂𝙰𝙽𝙹𝙴𝙴𝚅𝙰𝙽</a>
   </footer>
 
   <!-- JavaScript -->
@@ -133,7 +143,8 @@
     const T = ["","பத்து","இருபது","முப்பது","நாப்பது","ஐம்பது","அறுபது","எழுபது","எண்பது","தொண்ணூறு"];
     function bH(n){
       if(n < 10) return U[n];
-      if(n < 20) return ["","பதினொன்று","பதினிரண்டு","பதின்மூன்று","பதினான்கு","பதினைந்து","பதினாறு","பதினேழு","பதினெட்டு","பத்தொன்பது"][n - 10] || "பத்து";
+      if(n < 20) return ["","பதினொன்று","பதினிரண்டு","பதின்மூன்று","பதினான்கு","பதினைந்து",
+        "பதினாறு","பதினேழு","பதினெட்டு","பத்தொன்பது"][n - 10] || "பத்து";
       const t = Math.floor(n / 10), u = n % 10;
       return T[t] + (u ? ` ${U[u]}` : "");
     }
