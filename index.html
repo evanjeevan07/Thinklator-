@@ -3,33 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Thinklator ‑ மாத வட்டி கணிப்பான்</title>
+  <title>Thinklator ‑ மாத வட்டி கணிப்பான்</title>
 
-  <!-- Tailwind -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Mukta+Malar:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mukta+Malar:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
-    body{ font-family:'Mukta Malar',sans-serif; }
-    .brand{ font-family:'Pacifico',cursive; }
-    .shimmer{background:linear-gradient(90deg,#4ade80,#22c55e,#4ade80);
-             background-size:200% 100%;animation:shimmer 2s infinite;color:#fff;}
-    @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-    .footer-animate{border-top:2px solid;border-image:linear-gradient(to right,#16a34a,#86efac);
-                    border-image-slice:1}
+    body {
+      font-family: 'Mukta Malar', sans-serif;
+    }
+    .bebas {
+      font-family: 'Bebas Neue', cursive;
+      letter-spacing: 1px;
+    }
+    .shimmer {
+      background: linear-gradient(90deg, #4ade80, #22c55e, #4ade80);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+      color: #fff;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .footer-animate {
+      border-top: 2px solid;
+      border-image: linear-gradient(to right, #16a34a, #86efac);
+      border-image-slice: 1;
+    }
+
+    .nav-with-slide {
+      position: relative;
+      overflow: hidden;
+      background-color: #40d777;
+    }
+
+    .nav-with-slide::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 150px;
+      background-color: #bbf7d1;
+      z-index: 0;
+      clip-path: polygon(0 0, 90% 0, 65% 100%, 0 100%);
+    }
+
+    .brand {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .brand img {
+      height: 36px;
+      margin-left: 10px;
+    }
+
+    .nav-content {
+      position: relative;
+      z-index: 1;
+      color: white;
+    }
   </style>
 </head>
 
 <body class="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex flex-col justify-between text-gray-800">
-  <!-- ===== BRAND ===== -->
+
+  <!-- Navigation Bar -->
+  <nav class="nav-with-slide text-white py-3 px-6 flex items-center justify-between shadow-md">
+    <div class="text-3x1 font-bold tracking-wide brand">
+      <img src="https://assets.onecompiler.app/3zky9aw9p/43fpymfcg/20250422_195741.png" alt="Thinklator Logo">
+    </div>
+    <div class="space-x-4 text-sm sm:text-base nav-content"></div>
+  </nav>
+
+  <!-- Header -->
   <header class="text-center mt-6 select-none">
-    <h1 class="brand text-4xl text-green-700 drop-shadow-sm">Thinklator</h1>
-    <p class="text-green-800 font-semibold -mt-1">மாத வட்டி கணிப்பான்</p>
+    <h1 class="bebas text-green-800 text-4xl sm:text-5xl">Thinklator</h1>
+    <p class="bebas text-green-800 text-xl sm:text-2xl -mt-1">மாத வட்டி கணிப்பான்</p>
   </header>
 
-  <!-- ===== CALCULATOR CARD ===== -->
+  <!-- Calculator Card -->
   <main class="flex justify-center mt-8 px-4">
     <div id="calcCard" class="bg-white p-6 rounded-3xl shadow-md w-full max-w-md space-y-6">
 
@@ -38,89 +99,110 @@
         <div>
           <label class="block text-green-700 font-bold">முதலீடு தொகை (₹)</label>
           <input id="amount" type="number"
-                 class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-green-900"/>
+            class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-green-900"/>
         </div>
         <div>
           <label class="block text-green-700 font-bold">மாத வட்டி விகிதம் (%)</label>
           <input id="rate" type="number" step="0.01"
-                 class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-green-900"/>
+            class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-green-900"/>
         </div>
         <div>
           <label class="block text-green-700 font-bold">கால அவகாசம் (மாதங்களில்)</label>
           <input id="months" type="number"
-                 class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-green-900"/>
+            class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-green-900"/>
         </div>
       </div>
 
-      <!-- Calculate button -->
+      <!-- Button -->
       <button onclick="calculate()"
-              class="shimmer w-full py-3 rounded-xl font-semibold tracking-wide">கணக்கிடு</button>
+        class="shimmer w-full py-3 rounded-xl font-semibold tracking-wide">கணக்கிடு</button>
 
       <!-- Results -->
-      <div id="resultSection" class="mt-6"></div>
+      <div id="resultSection" class="mt-6 space-y-6"></div>
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="bg-green-100 text-green-800 text-center py-3 mt-10 footer-animate">
-    அனைத்தும் உரிமைகள் பாதுகாக்கப்பட்டவை © Thinklator
+    <a href="https://evanjeevan07.github.io/Portfolio/">Developed By 𝙴𝚅 𝚂𝙰𝙽𝙹𝙴𝙴𝚅𝙰𝙽</a>
   </footer>
 
-  <!-- ===== JS ===== -->
+  <!-- JavaScript -->
   <script>
-    /* ---------- Tamil number helpers ---------- */
-    const U=["","ஒன்று","இரண்டு","மூன்று","நான்கு","ஐந்து","ஆறு","ஏழு","எட்டு","ஒன்பது"];
-    const T=["","பத்து","இருபது","முப்பது","நாப்பது","ஐம்பது","அறுபது","எழுபது","எண்பது","தொண்ணூறு"];
-    function bH(n){if(n<10)return U[n];
-      if(n<20){return ["","பதினொன்று","பதினிரண்டு","பதின்மூன்று","பதினான்கு","பதினைந்து",
-              "பதினாறு","பதினேழு","பதினெட்டு","பத்தொன்பது"][n-10]||"பத்து";}
-      const t=Math.floor(n/10),u=n%10;return T[t]+(u?` ${U[u]}`:"");
+    const U = ["","ஒன்று","இரண்டு","மூன்று","நான்கு","ஐந்து","ஆறு","ஏழு","எட்டு","ஒன்பது"];
+    const T = ["","பத்து","இருபது","முப்பது","நாப்பது","ஐம்பது","அறுபது","எழுபது","எண்பது","தொண்ணூறு"];
+    function bH(n){
+      if(n < 10) return U[n];
+      if(n < 20) return ["","பதினொன்று","பதினிரண்டு","பதின்மூன்று","பதினான்கு","பதினைந்து","பதினாறு","பதினேழு","பதினெட்டு","பத்தொன்பது"][n - 10] || "பத்து";
+      const t = Math.floor(n / 10), u = n % 10;
+      return T[t] + (u ? ` ${U[u]}` : "");
     }
-    function bT(n){const h=Math.floor(n/100),r=n%100;
-      return (h?`${U[h]} நூறு${r?" ":""}`:"")+(r?bH(r):"");}
+    function bT(n){
+      const h = Math.floor(n / 100), r = n % 100;
+      return (h ? `${U[h]} நூறு${r ? " " : ""}` : "") + (r ? bH(r) : "");
+    }
     function taWords(num){
-      if(isNaN(num)||num<0) return "தவறான பதிவு";
-      if(num===0) return "பூஜ்யம்";
-      const c=Math.floor(num/1e7),l=Math.floor(num%1e7/1e5),
-            th=Math.floor(num%1e5/1e3),r=num%1e3,arr=[];
-      if(c)arr.push(`${bT(c)} கோடி`);
-      if(l)arr.push(`${bT(l)} லட்சம்`);
-      if(th)arr.push(`${bT(th)} ஆயிரம்`);
-      if(r)arr.push(bT(r));
-      return arr.join(" ")+" ரூபாய்";
+      if (isNaN(num) || num < 0) return "தவறான பதிவு";
+      if (num === 0) return "பூஜ்யம்";
+      const c = Math.floor(num / 1e7),
+            l = Math.floor(num % 1e7 / 1e5),
+            th = Math.floor(num % 1e5 / 1e3),
+            r = Math.floor(num % 1e3),
+            arr = [];
+      if (c) arr.push(`${bT(c)} கோடி`);
+      if (l) arr.push(`${bT(l)} லட்சம்`);
+      if (th) arr.push(`${bT(th)} ஆயிரம்`);
+      if (r) arr.push(bT(r));
+      return arr.join(" ") + " ரூபாய்";
     }
 
-    /* ---------- Calculate & render ---------- */
     function calculate(){
-      const amount=+amountInput.value,
-            rate=+rateInput.value,
-            months=+monthsInput.value;
-      if(!amount||!rate||!months) return alert("எல்லா புலங்களையும் நிரப்பவும்!");
-      const mi=(amount*rate)/100,
-            ti=mi*months,
-            total=amount+ti;
+      const amount = +amountInput.value,
+            rate = +rateInput.value,
+            months = +monthsInput.value;
+      if (!amount || !rate || !months) return alert("எல்லா புலங்களையும் நிரப்பவும்!");
 
-      resultSection.innerHTML=`
-        <div class="bg-green-100 p-4 rounded-xl text-green-900 mb-4 shadow space-y-2">
-          <div class="text-xl font-bold mb-1">எண்களில்</div><hr class="border-green-300 mb-2"/>
-          <p>முதலீடு: ₹${amount.toLocaleString()}</p>
-          <p>மாதாந்திர வட்டி: ₹${mi.toLocaleString()}</p>
-          <p>மொத்த வட்டி: ₹${ti.toLocaleString()}</p>
-          <p>மொத்த தொகை: ₹${total.toLocaleString()}</p>
+      const mi = (amount * rate) / 100,
+            ti = mi * months,
+            total = amount + ti;
+
+      const items = [
+        { label: "முதலீடு", value: amount },
+        { label: "மாதாந்திர வட்டி", value: mi },
+        { label: "மொத்த வட்டி", value: ti },
+        { label: "மொத்த தொகை", value: total }
+      ];
+
+      const tamilSection = items.map(item => `
+        <div class="flex justify-between border-b border-green-300 pb-1">
+          <span>${item.label}:</span>
+          <span class="text-right">${taWords(item.value)}</span>
         </div>
-        <div class="bg-green-100 p-4 rounded-xl text-green-900 shadow space-y-2">
-          <div class="text-xl font-bold mb-1">தமிழில்</div><hr class="border-green-300 mb-2"/>
-          <p>முதலீடு: ${taWords(amount)}</p>
-          <p>மாதாந்திர வட்டி: ${taWords(mi)}</p>
-          <p>மொத்த வட்டி: ${taWords(ti)}</p>
-          <p>மொத்த தொகை: ${taWords(total)}</p>
-        </div>`;
+      `).join("");
+
+      const numberSection = items.map(item => `
+        <div class="flex justify-between border-b border-green-300 pb-1">
+          <span>${item.label}:</span>
+          <span class="text-right">₹${item.value.toLocaleString()}</span>
+        </div>
+      `).join("");
+
+      resultSection.innerHTML = `
+        <div class="bg-green-200 p-4 rounded-xl text-green-900 shadow space-y-3 border border-green-400">
+          <div class="text-xl font-bold text-center mb-1 border-b border-green-500 pb-1">எண்கள்</div>
+          ${numberSection}
+        </div>
+        <div class="bg-green-200 p-4 rounded-xl text-green-900 shadow space-y-3 border border-green-400">
+          <div class="text-xl font-bold text-center mb-1 border-b border-green-500 pb-1">தமிழில்</div>
+          ${tamilSection}
+        </div>
+      `;
     }
 
-    /* -- short references for inputs -- */
-    const amountInput=document.getElementById('amount'),
-          rateInput  =document.getElementById('rate'),
-          monthsInput=document.getElementById('months'),
-          resultSection=document.getElementById('resultSection');
+    const amountInput = document.getElementById('amount'),
+          rateInput = document.getElementById('rate'),
+          monthsInput = document.getElementById('months'),
+          resultSection = document.getElementById('resultSection');
   </script>
 </body>
 </html>
