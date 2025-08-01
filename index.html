@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <!-- Static Title - Language translation applied -->
-  <title>Thinklator - Interest Calculator</title>
+  <title>Thinklator - வட்டி கால்குலேட்டர்</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -14,49 +13,38 @@
 
   <!-- Chart.js for Donut Chart -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <!-- Chart.js Datalabels Plugin -->
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.1.0"></script>
 
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-
   <style>
     body {
       font-family: 'Teko', sans-serif;
-      font-weight: 700; /* Applied Teko 700 globally */
-      letter-spacing: 0.5px; /* Added for better readability with Teko font */
+      font-weight: 700;
+      letter-spacing: 0.5px;
       line-height: 1.6;
       overflow-x: hidden;
     }
-
-    /* Styles from the first HTML */
     .brand-text {
-      font-family: 'Teko', sans-serif; /* Changed font */
+      font-family: 'Teko', sans-serif;
       font-weight: 700;
       font-size: 1.5rem;
       color: white;
       margin-left: 8px;
     }
-
     .shimmer {
       background: linear-gradient(90deg, #4ade80, #22c55e, #4ade80);
       background-size: 200% 100%;
       animation: shimmer 2s infinite;
       color: #fff;
     }
-
     @keyframes shimmer {
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
-
-    .footer-animate {
-      border-top: 2px solid;
-      border-image: linear-gradient(to right, #16a34a, #86efac);
-      border-image-slice: 1;
-    }
-
     .nav-with-slide {
       position: relative;
       overflow: hidden;
@@ -66,7 +54,6 @@
       align-items: center;
       z-index: 5;
     }
-
     .nav-with-slide::before {
       content: "";
       position: absolute;
@@ -78,36 +65,31 @@
       z-index: 0;
       clip-path: polygon(0 0, 90% 0, 65% 100%, 0 100%);
     }
-
     .brand {
       position: relative;
       z-index: 1;
       display: flex;
       align-items: center;
     }
-
     .brand img {
       height: 50px;
       width: 50px;
       margin-right: 0;
       margin-left: 0;
     }
-
     .nav-with-slide .brand-text {
          margin-left: 8px;
          text-align: left;
          flex-grow: 0;
     }
-
-    /* --- Styles for New Result Card --- */
     .investment-card {
         background-color: #ffffff;
         padding: 30px;
         border-radius: 20px;
         width: 100%;
-        max-width: 448px; /* Standardized width to match max-w-md */
+        max-width: 448px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        margin: 0 auto; /* Centered within its container */
+        margin: 0 auto;
         border: 1px solid #e2e8f0;
     }
     .investment-card .header {
@@ -153,8 +135,6 @@
     .investment-card .detail-value.highlight {
         color: #25D366;
     }
-
-    /* --- Styles for Chart Container --- */
     #chartContainer {
         display: none;
         position: relative;
@@ -163,24 +143,22 @@
         padding: 20px;
         width: 100%;
         max-width: 488px;
-        background-color: #ffffff; /* UPDATED to white */
+        background-color: #ffffff;
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
-        border: 1px solid #e2e8f0; /* ADDED for better visibility */
+        border: 1px solid #e2e8f0;
     }
-
     #yellowBackgroundSection {
         background-color: #fff;
         padding: 20px;
         margin: 20px auto;
-        max-width: 448px; /* Standardized width */
+        max-width: 448px;
         width: 95%;
         box-sizing: border-box;
         display: none;
         border-radius: 15px;
     }
-
      #receiptWrapper {
          background-color: #fff;
          border: 2px solid #22c55e;
@@ -194,7 +172,6 @@
           box-sizing: border-box;
           flex-direction: column;
      }
-
     #receiptPreviewTitle {
          display: none;
          padding: 10px 15px;
@@ -206,7 +183,6 @@
          margin-bottom: 0;
          font-size: 1em;
     }
-
     #receiptTemplate {
          width: 100%;
          padding: 0;
@@ -214,65 +190,55 @@
          flex-grow: 1;
          font-size: 0.9em;
     }
-
      #receiptTemplate .green-section-bg {
          background-color: #bbf7d1;
          padding: 8px 15px;
          margin: 0;
      }
-
     #receiptTemplate .receipt-header {
         text-align: center;
         margin-bottom: 0;
          padding-bottom: 4px;
     }
-
     #receiptTemplate .receipt-brand {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 4px;
     }
-
     #receiptTemplate .receipt-brand-logo {
         width: 35px;
         height: auto;
         margin-right: 6px;
     }
-
     #receiptTemplate .receipt-brand h2 {
         font-size: 1.3em;
         margin: 0;
         color: #29ca64;
         font-family: 'Teko', sans-serif;
     }
-
     #receiptTemplate .receipt-title {
         font-size: 0.9em;
         color: #29ca64;
         margin-top: 0;
         margin-bottom: 0;
     }
-
     #receiptTemplate .date-time-section {
         text-align: center;
         margin-bottom: 0;
         padding-bottom: 8px;
          padding-top: 0;
     }
-
     #receiptTemplate .dashed-separator {
        border-bottom: 1px dashed #ccc;
        margin: 8px 0;
        width: 100%;
        box-sizing: border-box;
     }
-
     #receiptTemplate .section {
         margin-bottom: 15px;
         padding: 8px 15px;
     }
-
     #receiptTemplate .section-title {
         font-size: 1em;
         font-weight: 700;
@@ -282,20 +248,17 @@
         border-bottom: 1px dashed #ccc;
         color: #2c3440;
     }
-
     #receiptTemplate .detail-row {
         display: flex;
         justify-content: space-between;
         margin-bottom: 4px;
         font-size: 0.9em;
     }
-
     #receiptTemplate .detail-row .label {
         color: #2c3440;
          flex-shrink: 0;
          margin-right: 10px;
     }
-
      #receiptTemplate .detail-row .value {
         color: #2c3440;
         text-align: right;
@@ -303,12 +266,10 @@
          flex-shrink: 1;
          min-width: 0;
      }
-
     #receiptTemplate .final-amount-section {
          padding-top: 0;
          margin-bottom: 0;
      }
-
      #receiptTemplate .final-amount-row-item {
          display: flex;
          justify-content: space-between;
@@ -325,23 +286,17 @@
           flex-shrink: 1;
           min-width: 0;
       }
-
-
     #receiptTemplate .receipt-footer-content {
         text-align: center;
         font-size: 0.75em;
         color: #29ca64;
     }
-
      #receiptTemplate .receipt-footer-content p {
          margin: 3px 0;
      }
-
      #receiptTemplate .receipt-footer-content p:last-child {
           font-family: 'Teko', sans-serif;
      }
-
-
     #showPrintButton {
         display: none;
         align-items: center;
@@ -356,178 +311,78 @@
         transition: background-color 0.3s ease;
         margin: 20px auto 0 auto;
     }
-
     #showPrintButton:hover {
         background-color: #388E3C;
     }
-
     #showPrintButton svg {
         margin-right: 8px;
         fill: white;
         width: 18px;
         height: 18px;
     }
-
     @media print {
-        body > *:not(#yellowBackgroundSection) {
-            display: none !important;
+        body > *:not(#yellowBackgroundSection) { display: none !important; }
+        #showPrintButton { display: none !important; }
+        #yellowBackgroundSection {
+              display: block !important; position: static !important; width: 100% !important;
+              max-width: none !important; margin: 0 !important; box-shadow: none !important;
+              border-radius: 0 !important; padding: 0 !important; background-color: #fff !important;
+              -webkit-print-color-adjust: exact; color-adjust: exact;
         }
-        #showPrintButton {
-             display: none !important;
-         }
-         #yellowBackgroundSection {
-              display: block !important;
-              position: static !important;
-              width: 100% !important;
-              max-width: none !important;
-              margin: 0 !important;
-              box-shadow: none !important;
-              border-radius: 0 !important;
-              padding: 0 !important;
-              background-color: #fff !important;
-              -webkit-print-color-adjust: exact;
-              color-adjust: exact;
-         }
-         #receiptWrapper {
-             display: block !important;
-              position: static !important;
-              width: 100% !important;
-              max-width: none !important;
-              margin: 0 auto !important;
-              box-shadow: none !important;
-              border: 1px solid #000 !important;
-              border-radius: 0 !important;
-              padding: 0 !important;
-              flex-direction: column !important;
-              background-color: #fff !important;
-              -webkit-print-color-adjust: exact;
-              color-adjust: exact;
-         }
-          #receiptTemplate {
-             width: 100% !important;
-             padding: 0 !important;
-              font-size: initial !important;
-              background-color: #fff !important;
-               -webkit-print-color-adjust: exact;
-              color-adjust: exact;
-         }
-         #receiptTemplate .receipt-brand h2,
-         #receiptTemplate .receipt-title,
-         #receiptTemplate .section-title,
-         #receiptTemplate .detail-row,
-         #receiptTemplate .final-amount-row-item,
-         #receiptTemplate .receipt-footer-content {
+        #receiptWrapper {
+             display: block !important; position: static !important; width: 100% !important;
+             max-width: none !important; margin: 0 auto !important; box-shadow: none !important;
+             border: 1px solid #000 !important; border-radius: 0 !important; padding: 0 !important;
+             flex-direction: column !important; background-color: #fff !important;
+             -webkit-print-color-adjust: exact; color-adjust: exact;
+        }
+        #receiptTemplate {
+             width: 100% !important; padding: 0 !important; font-size: initial !important;
+             background-color: #fff !important; -webkit-print-color-adjust: exact; color-adjust: exact;
+        }
+        #receiptTemplate .receipt-brand h2, #receiptTemplate .receipt-title, #receiptTemplate .section-title,
+        #receiptTemplate .detail-row, #receiptTemplate .final-amount-row-item, #receiptTemplate .receipt-footer-content {
              font-size: initial !important;
-         }
-          #receiptTemplate .receipt-header {
-             padding: 4mm 8mm 3mm 8mm !important;
-          }
-           #receiptTemplate .date-time-section {
-              padding: 0mm 8mm 3mm 8mm !important;
-           }
-         #receiptTemplate .green-section-bg {
-             background-color: #bbf7d1 !important;
-             -webkit-print-color-adjust: exact;
-             color-adjust: exact;
-         }
-          #receiptTemplate .section {
-             padding: 3mm 8mm !important;
-              margin-bottom: 8mm !important;
-          }
-           #receiptTemplate .green-footer-section {
-              padding: 3mm 8mm !important;
-           }
-          #receiptTemplate .dashed-separator {
-              border-bottom-color: #000 !important;
-              margin: 3mm 0 !important;
-          }
-           #receiptTemplate .receipt-brand-logo {
-             width: 30px !important;
-              margin-right: 5mm !important;
-           }
-          #receiptTemplate,
-          #receiptTemplate .section-title,
-          #receiptTemplate .detail-row .label,
-          #receiptTemplate .detail-row .value {
+        }
+        #receiptTemplate .receipt-header { padding: 4mm 8mm 3mm 8mm !important; }
+        #receiptTemplate .date-time-section { padding: 0mm 8mm 3mm 8mm !important; }
+        #receiptTemplate .green-section-bg { background-color: #bbf7d1 !important; -webkit-print-color-adjust: exact; color-adjust: exact; }
+        #receiptTemplate .section { padding: 3mm 8mm !important; margin-bottom: 8mm !important; }
+        #receiptTemplate .green-footer-section { padding: 3mm 8mm !important; }
+        #receiptTemplate .dashed-separator { border-bottom-color: #000 !important; margin: 3mm 0 !important; }
+        #receiptTemplate .receipt-brand-logo { width: 30px !important; margin-right: 5mm !important; }
+        #receiptTemplate, #receiptTemplate .section-title, #receiptTemplate .detail-row .label, #receiptTemplate .detail-row .value {
              color: #000 !important;
-          }
-          #receiptTemplate .receipt-brand h2,
-          #receiptTemplate .receipt-title,
-          #receiptTemplate .date-time,
-          #receiptTemplate .final-amount-row-item,
-          #receiptTemplate .receipt-footer-content {
-               color: #22c55e !important;
-                -webkit-print-color-adjust: exact;
-                color-adjust: exact;
-          }
-          #receiptTemplate .english-font {
-              font-family: 'Teko', sans-serif !important;
-          }
-           .time-unit-radio {
-               border-color: #000 !important;
-               background-color: #fff !important;
-           }
-           .time-unit-radio::before {
-               background-color: #000 !important;
-           }
-           .time-unit-radio:checked {
-                background-color: #ccc !important;
-                 border-color: #000 !important;
-           }
-            #receiptTemplate .detail-row .value,
-           #receiptTemplate .final-amount-row-item .value {
-                 word-break: break-all !important;
-                  max-width: none !important;
-                   flex-shrink: 0 !important;
-           }
+        }
+        #receiptTemplate .receipt-brand h2, #receiptTemplate .receipt-title, #receiptTemplate .date-time,
+        #receiptTemplate .final-amount-row-item, #receiptTemplate .receipt-footer-content {
+             color: #22c55e !important; -webkit-print-color-adjust: exact; color-adjust: exact;
+        }
+        #receiptTemplate .english-font { font-family: 'Teko', sans-serif !important; }
+        .time-unit-radio { border-color: #000 !important; background-color: #fff !important; }
+        .time-unit-radio::before { background-color: #000 !important; }
+        .time-unit-radio:checked { background-color: #ccc !important; border-color: #000 !important; }
+        #receiptTemplate .detail-row .value, #receiptTemplate .final-amount-row-item .value {
+             word-break: break-all !important; max-width: none !important; flex-shrink: 0 !important;
+        }
     }
-
-    /* --- Custom Styles for Green Radio Buttons --- */
     .time-unit-radio {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        width: 1.25em;
-        height: 1.25em;
-        border: 2px solid #22c55e;
-        border-radius: 50%;
-        outline: none;
-        cursor: pointer;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: white;
-        transition: background-color 0.2s ease, border-color 0.2s ease;
+        appearance: none; -webkit-appearance: none; -moz-appearance: none;
+        width: 1.25em; height: 1.25em; border: 2px solid #22c55e;
+        border-radius: 50%; outline: none; cursor: pointer; position: relative;
+        display: flex; align-items: center; justify-content: center;
+        background-color: white; transition: background-color 0.2s ease, border-color 0.2s ease;
         flex-shrink: 0;
     }
-
     .time-unit-radio::before {
-        content: '';
-        width: 0.6em;
-        height: 0.6em;
-        border-radius: 50%;
-        background-color: #22c55e;
-        transform: scale(0);
-        transition: transform 0.2s ease;
+        content: ''; width: 0.6em; height: 0.6em; border-radius: 50%;
+        background-color: #22c55e; transform: scale(0); transition: transform 0.2s ease;
     }
-
-    .time-unit-radio:checked {
-        background-color: #dcfce7;
-        border-color: #16a34a;
-    }
-
-    .time-unit-radio:checked::before {
-        transform: scale(1);
-    }
-
-    .time-unit-radio:focus {
-        box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.5);
-    }
-     .time-unit-label {
-         color: #16a34a;
-     }
-
+    .time-unit-radio:checked { background-color: #dcfce7; border-color: #16a34a; }
+    .time-unit-radio:checked::before { transform: scale(1); }
+    .time-unit-radio:focus { box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.5); }
+    .time-unit-label { color: #16a34a; }
+    #sidebar { font-family: 'Teko', sans-serif; }
   </style>
 </head>
 
@@ -535,47 +390,73 @@
 
   <!-- Navigation Bar -->
   <nav id="mainNav" class="nav-with-slide text-white py-3 px-6 shadow-md">
-    <div class="brand">
-      <img src="https://uploads.onecompiler.io/3zky9aw9p/43qxpqbyr/20250719_161135.png" alt="Thinklator Logo">
+    <div class="flex items-center">
+        <button id="hamburgerBtn" class="text-white p-2 focus:outline-none z-10 mr-2">
+            <i class="fas fa-bars fa-lg"></i>
+        </button>
+        <div class="brand">
+          <img src="https://uploads.onecompiler.io/3zky9aw9p/43qxpqbyr/20250719_161135.png" alt="Thinklator Logo">
+        </div>
     </div>
   </nav>
+
+  <!-- Sidebar Menu -->
+  <aside id="sidebar" class="fixed top-0 left-0 h-full w-72 bg-white shadow-xl transform -translate-x-full transition-transform duration-300 ease-in-out z-50">
+      <div class="flex justify-between items-center p-4 bg-green-600 text-white">
+          <h2 class="text-2xl font-bold tracking-wider">Menu</h2>
+          <button id="closeSidebarBtn" class="text-white p-2 rounded-full hover:bg-green-700 focus:outline-none">
+              <i class="fas fa-times fa-lg"></i>
+          </button>
+      </div>
+      <nav class="mt-6">
+          <a href="javascript:void(0)" id="monthlyInterestCalculatorLink" class="flex items-center gap-4 py-4 px-5 text-xl text-gray-700 hover:bg-green-100 hover:text-green-800 transition-colors duration-200">
+            <i class="fa-solid fa-money-bill-wave w-6 text-center text-green-600"></i>
+            <span>Monthly Interest</span>
+          </a>
+          <a href="javascript:void(0)" id="fdCalculatorLink" class="flex items-center gap-4 py-4 px-5 text-xl text-gray-700 hover:bg-green-100 hover:text-green-800 transition-colors duration-200">
+            <i class="fa-solid fa-piggy-bank w-6 text-center text-green-600"></i>
+            <span>FD Calculator</span>
+          </a>
+          <a href="javascript:void(0)" id="loanCalculatorLink" class="flex items-center gap-4 py-4 px-5 text-xl text-gray-700 hover:bg-green-100 hover:text-green-800 transition-colors duration-200">
+            <i class="fa-solid fa-rupee-sign w-6 text-center text-green-600"></i>
+            <span>Loan Calculator</span>
+          </a>
+      </nav>
+  </aside>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
 
   <!-- Header -->
   <header id="mainHeader" class="text-center mt-6 select-none">
     <h1 class="text-green-800 font-bold text-3xl -mt-5" style="font-family: 'Teko', sans-serif;">Welcome!</h1>
-    <p class="text-green-800 font-bold text-xl -mt-1">Interest Calculator</p>
+    <p id="calculatorTitle" class="text-green-800 font-bold text-xl -mt-1">Monthly Interest Calculator</p>
   </header>
 
-  <!-- SECTION 1: Input -->
+  <!-- Input Section -->
   <main class="flex justify-center mt-8 px-4">
     <div id="calcCard" class="bg-white p-6 rounded-3xl shadow-md w-full max-w-md space-y-6">
-      <!-- Inputs -->
       <div id="inputSection" class="space-y-5">
         <div>
-          <label for="clientName" class="block text-green-700 text-lg">Name</label>
-          <input id="clientName" type="text"
-            class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-black-900"/>
-          <span id="nameError" class="text-red-600 text-sm block mt-1"></span>
-        </div>
-        <div>
-          <label for="amount" class="block text-green-700 text-lg">Investment (₹)</label>
-          <input id="amount" type="number" min="0" step="any"
-            class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-black-900"/>
+          <label for="amount" id="amountLabel" class="block text-green-700 text-lg">Principal Amount (₹)</label>
+          <!-- DEFAULT VALUE UPDATED HERE -->
+          <input id="amount" type="number" min="0" step="any" class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-black-900" value="12000"/>
           <span id="amountError" class="text-red-600 text-sm block mt-1"></span>
         </div>
         <div>
-          <label for="rate" class="block text-green-700 text-lg">Monthly Interest Rate (%)</label>
-          <input id="rate" type="number" step="0.01" min="0"
-            class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-black-900"/>
+          <label for="rate" id="rateLabel" class="block text-green-700 text-lg">Monthly Interest Rate (%)</label>
+          <!-- DEFAULT VALUE UPDATED HERE -->
+          <input id="rate" type="number" step="0.01" min="0" class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-black-900" value="2"/>
           <span id="rateError" class="text-red-600 text-sm block mt-1"></span>
         </div>
         <div>
-          <label for="timePeriod" class="block text-green-700 text-lg">Time Period</label>
-          <input id="timePeriod" type="number" min="1"
-            class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-black-900"/>
+          <label for="timePeriod" id="timePeriodLabel" class="block text-green-700 text-lg">Time Period</label>
+          <!-- DEFAULT VALUE UPDATED HERE -->
+          <input id="timePeriod" type="number" min="1" class="w-full border-b-2 border-green-500 focus:outline-none p-2 bg-transparent text-black-900" value="12"/>
            <span id="timePeriodError" class="text-red-600 text-sm block mt-1"></span>
            <div class="flex items-center space-x-4 mt-2">
                <div class="flex items-center">
+                   <!-- DEFAULT UNIT SET HERE -->
                    <input type="radio" id="unitMonths" name="timeUnit" value="months" checked class="time-unit-radio"/>
                    <label for="unitMonths" class="ml-1 time-unit-label">Months</label>
                </div>
@@ -586,45 +467,24 @@
            </div>
         </div>
       </div>
-
-      <!-- Buttons -->
       <div class="flex space-x-4">
-          <button id="calculateBtn" class="shimmer flex-1 py-3 rounded-xl tracking-wide text-lg">
-            Calculate
-          </button>
-          <button id="clearBtn" class="flex-1 py-3 rounded-xl tracking-wide text-lg bg-gray-300 text-gray-800 hover:bg-gray-400 transition duration-300 ease-in-out">
-            Clear
-          </button>
+          <button id="calculateBtn" class="shimmer flex-1 py-3 rounded-xl tracking-wide text-lg">Calculate</button>
+          <button id="clearBtn" class="flex-1 py-3 rounded-xl tracking-wide text-lg bg-gray-300 text-gray-800 hover:bg-gray-400">Clear</button>
       </div>
-
-      <!-- Result message -->
-      <div id="resultMessage" class="mt-4 text-center text-green-700 italic min-h-[1.5rem] text-lg">
-      </div>
+      <div id="resultMessage" class="mt-4 text-center text-green-700 italic min-h-[1.5rem] text-lg"></div>
     </div>
   </main>
 
-  <!-- SECTION 2: Result And Chart -->
+  <!-- Result And Chart Section -->
   <div id="resultsAndChartSection" class="mt-8 px-4" style="display: none;">
-
-      <!-- Calculation Results (First) -->
-      <div id="calculationResults" class="space-y-4">
-        <!-- New result card will be injected here by JavaScript -->
-      </div>
-
-      <!-- Donut Chart Container (Second) -->
-      <div id="chartContainer">
-         <canvas id="interestChart"></canvas>
-      </div>
-
+    <div id="calculationResults" class="space-y-4"></div>
+    <div id="chartContainer"><canvas id="interestChart"></canvas></div>
   </div>
 
-
-  <!-- SECTION 3: Receipt Preview -->
+  <!-- Receipt Preview Section -->
   <div id="yellowBackgroundSection">
       <div id="receiptWrapper">
-           <div id="receiptPreviewTitle">
-               Receipt Preview
-           </div>
+           <div id="receiptPreviewTitle">Receipt Preview</div>
           <div id="receiptTemplate">
                <div class="receipt-container">
                     <div class="green-section-bg">
@@ -633,68 +493,27 @@
                                 <img src="https://uploads.onecompiler.io/3zky9aw9p/43qxpqbyr/20250719_161135.png" alt="Thinklator Logo" class="receipt-brand-logo">
                                 <h2 class="english-font">Thinklator</h2>
                             </div>
-                            <p class="receipt-title">Interest Calculation Receipt</p>
+                            <p class="receipt-title" id="receiptMainTitle">Interest Calculation Receipt</p>
                         </div>
-                        <div class="date-time-section">
-                            <p class="date-time" id="receiptDateTime"></p>
-                        </div>
+                        <div class="date-time-section"><p class="date-time" id="receiptDateTime"></p></div>
                     </div>
                     <div class="dashed-separator"></div>
-
-                    <div class="section">
-                        <h3 class="section-title">Calculation Details</h3>
-                        <div class="detail-row">
-                            <span class="label">Name:</span>
-                            <span class="value" id="receiptClientName"></span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Investment:</span>
-                            <span class="value" id="receiptAmount"></span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Monthly Interest Rate:</span>
-                            <span class="value" id="receiptRate"></span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="label">Time Period:</span>
-                            <span class="value" id="receiptTimePeriod"></span>
-                        </div>
-                    </div>
+                    <div class="section" id="receiptDetailsSection"></div>
                     <div class="dashed-separator"></div>
-
-                    <div class="section">
-                        <h3 class="section-title">Results</h3>
-                         <div class="detail-row">
-                            <span class="label">Monthly Interest:</span>
-                            <span class="value" id="receiptMonthlyInterest"></span>
-                        </div>
-                         <div class="detail-row">
-                            <span class="label">Total Interest:</span>
-                            <span class="value" id="receiptTotalInterest"></span>
-                        </div>
-                    </div>
+                    <div class="section" id="receiptResultsSection"></div>
                     <div class="dashed-separator"></div>
-
-                     <div class="section final-amount-section">
-                         <div class="final-amount-row-item">
-                             <span class="label">Final Amount:</span>
-                             <span class="value" id="receiptFinalAmount"></span>
-                         </div>
-                    </div>
+                    <div class="section final-amount-section" id="receiptFinalAmountSection"></div>
                     <div class="dashed-separator"></div>
-
                     <div class="green-section-bg green-footer-section">
                          <div class="receipt-footer-content">
                              <p>This receipt was generated by Thinklator</p>
                              <p class="english-font">© <span id="currentYear"></span> Thinklator - Your reliable tool for financial calculations</p>
                          </div>
                     </div>
-
                 </div>
             </div>
       </div>
   </div>
-
 
   <!-- Print Button -->
    <div class="flex justify-center mb-8">
@@ -704,48 +523,118 @@
       </button>
   </div>
 
-
   <!-- How to Calculate Section -->
   <div class="px-4 py-8">
     <div class="max-w-3xl mx-auto bg-white p-6 rounded-2xl shadow-md">
-      <h2 class="text-xl text-green-800 text-center mb-4">How to Calculate Interest</h2>
-      <p class="text-gray-700 mb-3 text-lg" style="font-weight: normal;">
-        This calculator performs calculations using the simple interest method. Below is an explanation of how the interest is calculated:
-      </p>
-      <ol class="list-decimal list-inside space-y-3 text-gray-700 text-lg" style="font-weight: normal;">
-        <li>
-          <strong>Monthly Interest:</strong> The monthly interest is calculated by multiplying the Investment by the monthly interest rate and then dividing the result by 100.<br>
-          <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Monthly Interest = (Principal × Monthly Interest Rate) / 100</code>
-        </li>
-        <li>
-          <strong>Total Interest:</strong> The total interest is found by multiplying the calculated monthly interest by the total number of months you provided.<br>
-          <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Total Interest = Monthly Interest × Number of Months</code>
-        </li>
-        <li>
-          <strong>Final Amount:</strong> The final amount you need to pay or receive is obtained by adding the calculated total interest to the Investment.<br>
-          <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Final Amount = Principal + Total Interest</code>
-        </li>
-      </ol>
+       <div id="howToCalculateMonthly" style="display: none;">
+          <h2 class="text-xl text-green-800 text-center mb-4">How to Calculate Monthly Interest</h2>
+          <div class="text-gray-700 text-lg space-y-4" style="font-weight: normal;">
+            <p>Of course! Here is a step-by-step guide to calculate the interest and final amount for ₹12,000 at 2% monthly interest for 12 months.</p>
+            <h3 class="font-bold text-lg text-green-700 pt-2">Calculation Guide</h3>
+            <p>Here are the details for your calculation:</p>
+            <div class="pl-4">
+                <p><strong>Principal Amount (P):</strong> ₹12,000</p>
+                <p><strong>Monthly Interest Rate (R):</strong> 2%</p>
+                <p><strong>Number of Months (T):</strong> 12 months</p>
+            </div>
+            <div class="pt-4">
+                <h3 class="font-bold text-lg text-green-700">Step 1: Calculate the Interest for One Month</h3>
+                <p>First, we find out how much interest is charged for a single month.</p>
+                <p><strong>Formula:</strong> <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Monthly Interest = (Principal × Monthly Rate) / 100</code></p>
+                <p><strong>Calculation:</strong></p>
+                <ul class="list-disc list-inside pl-4">
+                    <li>Monthly Interest = (₹12,000 × 2) / 100</li>
+                    <li>Monthly Interest = ₹24,000 / 100</li>
+                    <li>Monthly Interest = ₹240</li>
+                </ul>
+                <p><strong>Guidance:</strong> This means you will pay ₹240 in interest every single month.</p>
+            </div>
+            <div class="pt-4">
+                <h3 class="font-bold text-lg text-green-700">Step 2: Calculate the Total Interest for 12 Months</h3>
+                <p>Next, we calculate the total interest you will pay over the entire 12-month period.</p>
+                <p><strong>Formula:</strong> <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Total Interest = Monthly Interest × Number of Months</code></p>
+                <p><strong>Calculation:</strong></p>
+                <ul class="list-disc list-inside pl-4">
+                    <li>Total Interest = ₹240 × 12</li>
+                    <li>Total Interest = ₹2,880</li>
+                </ul>
+                <p><strong>Guidance:</strong> Over the full 12 months, the total amount of interest you will pay is ₹2,880.</p>
+            </div>
+            <div class="pt-4">
+                <h3 class="font-bold text-lg text-green-700">Step 3: Calculate the Total Amount to be Repaid (Final Amount)</h3>
+                <p>Finally, we add the total interest to the original principal amount to find the grand total you need to repay.</p>
+                <p><strong>Formula:</strong> <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Final Amount = Principal + Total Interest</code></p>
+                <p><strong>Calculation:</strong></p>
+                <ul class="list-disc list-inside pl-4">
+                    <li>Final Amount = ₹12,000 + ₹2,880</li>
+                    <li>Final Amount = ₹14,880</li>
+                </ul>
+                <p><strong>Guidance:</strong> By the end of the 12 months, the total amount you will have to repay, including the original loan and all the interest, is ₹14,880.</p>
+            </div>
+            <div class="pt-4 border-t border-gray-200 mt-4">
+                <h3 class="font-bold text-lg text-green-700">Final Summary</h3>
+                <div class="pl-4">
+                    <p><strong>Original Loan (Principal):</strong> ₹12,000</p>
+                    <p><strong>Interest Per Month:</strong> ₹240</p>
+                    <p><strong>Total Interest for 12 Months:</strong> ₹2,880</p>
+                    <p><strong>Total Amount to Repay:</strong> ₹14,880</p>
+                </div>
+            </div>
+          </div>
+       </div>
+       <div id="howToCalculateFD" style="display: none;">
+          <h2 class="text-xl text-green-800 text-center mb-4">How to Calculate FD Interest</h2>
+          <p class="text-gray-700 mb-3 text-lg" style="font-weight: normal;">This calculator performs calculations using the simple interest method based on an annual interest rate.</p>
+          <ol class="list-decimal list-inside space-y-3 text-gray-700 text-lg" style="font-weight: normal;">
+            <li><strong>Monthly Interest:</strong> First, the annual interest rate is converted to a monthly rate. Then, the monthly interest is calculated.<br>
+              <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Monthly Rate = Annual Rate / 12</code><br>
+              <code class="text-sm bg-gray-200 p-1 rounded mt-1 inline-block">Monthly Interest = (Principal × Monthly Rate) / 100</code></li>
+            <li><strong>Total Interest:</strong> Total Interest = Monthly Interest × Number of Months</li>
+            <li><strong>Final Amount:</strong> Final Amount = Principal + Total Interest</li>
+          </ol>
+       </div>
+       <div id="howToCalculateLoan" style="display: none;">
+          <h2 class="text-xl text-green-800 text-center mb-4">How to Calculate Loan EMI</h2>
+           <p class="text-gray-700 mb-3 text-lg" style="font-weight: normal;">This calculator determines your Equated Monthly Installment (EMI) using the standard formula based on an annual interest rate.</p>
+          <ol class="list-decimal list-inside space-y-3 text-gray-700 text-lg" style="font-weight: normal;">
+            <li><strong>EMI Calculation:</strong> EMI = [P × r × (1+r)ⁿ] / [(1+r)ⁿ - 1], where r = (Annual Rate / 12) / 100</li>
+            <li><strong>Total Payment:</strong> Total Payment = EMI × Number of Months</li>
+            <li><strong>Total Interest Paid:</strong> Total Interest = Total Payment - Loan Amount</li>
+          </ol>
+       </div>
     </div>
   </div>
 
-
   <!-- Footer -->
-  <footer id="mainFooter" class="bg-green-100 text-green-800 text-center py-3 mt-auto footer-animate">
-    <a href="https://evanjeevan07.github.io/Portfolio/">Developed By 𝙴𝚅 𝚂𝙰𝙽𝙹𝙴𝙴𝚅𝙰𝙽</a>
+  <footer id="mainFooter" class="bg-green-100 text-green-800 mt-auto footer-animate">
+      <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 text-center">
+        <p class="text-xl font-bold text-green-800 mb-6 tracking-wide">“Think Smart. Use Thinklator.”</p>
+        <div class="flex justify-center space-x-6 mb-8">
+            <a href="#" class="text-green-600 hover:text-green-800"><i class="fab fa-x-twitter fa-2x"></i></a>
+            <a href="#" class="text-green-600 hover:text-green-800"><i class="fab fa-instagram fa-2x"></i></a>
+            <a href="#" class="text-green-600 hover:text-green-800"><i class="fab fa-google fa-2x"></i></a>
+        </div>
+        <nav class="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-8 text-lg">
+            <a href="#" class="text-green-700 hover:text-green-900">About</a>
+            <a href="#" class="text-green-700 hover:text-green-900">Contact</a>
+            <a href="#" class="text-green-700 hover:text-green-900">Privacy Policy</a>
+            <a href="#" class="text-green-700 hover:text-green-900">Disclaimer</a>
+        </nav>
+        <div class="text-center text-green-700">
+          <p class="text-base">© <span id="footerCurrentYear"></span> Thinklator. All Rights Reserved.</p>
+          <p class="text-base mt-2"><a href="https://evanjeevan07.github.io/Portfolio/" class="hover:text-green-900">Developed By 𝙴𝚅 𝚂𝙰𝙽𝙹𝙴𝙴𝚅𝙰𝙽</a></p>
+        </div>
+    </div>
   </footer>
-
+  
   <!-- JavaScript -->
   <script>
-    console.log("Script started.");
     let myDonutChart = null;
-
-    // Register the datalabels plugin globally
+    let currentCalculatorMode = 'monthly'; 
     Chart.register(ChartDataLabels);
 
     function formatEnglishDateTime(date) {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
         const day = date.getDate();
         const month = months[date.getMonth()];
         const year = date.getFullYear();
@@ -755,19 +644,15 @@
         hours = hours % 12;
         hours = hours ? hours : 12;
         const minutesStr = minutes < 10 ? '0' + minutes : minutes;
-
         return `${day} ${month}, ${year} at ${hours}:${minutesStr} ${ampm}`;
     }
 
     function formatCurrency(num) {
-        if (String(num).includes('%')) {
-          return num;
-        }
+        if (String(num).includes('%')) return num;
         const roundedNum = parseFloat(num.toFixed(2));
         return roundedNum.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    const clientNameInput = document.getElementById('clientName');
     const amountInput = document.getElementById('amount');
     const rateInput = document.getElementById('rate');
     const timePeriodInput = document.getElementById('timePeriod');
@@ -781,144 +666,132 @@
     const resultMessageDiv = document.getElementById('resultMessage');
     const yellowBackgroundSectionDiv = document.getElementById('yellowBackgroundSection');
     const chartContainer = document.getElementById('chartContainer');
-
-    const nameErrorSpan = document.getElementById('nameError');
     const amountErrorSpan = document.getElementById('amountError');
     const rateErrorSpan = document.getElementById('rateError');
     const timePeriodErrorSpan = document.getElementById('timePeriodError');
-
-    const receiptClientNameSpan = document.getElementById('receiptClientName');
-    const receiptAmountSpan = document.getElementById('receiptAmount');
-    const receiptRateSpan = document.getElementById('receiptRate');
-    const receiptTimePeriodSpan = document.getElementById('receiptTimePeriod');
-    const receiptMonthlyInterestSpan = document.getElementById('receiptMonthlyInterest');
-    const receiptTotalInterestSpan = document.getElementById('receiptTotalInterest');
-    const receiptFinalAmountSpan = document.getElementById('receiptFinalAmount');
+    const calculatorTitle = document.getElementById('calculatorTitle');
+    const amountLabel = document.getElementById('amountLabel');
+    const rateLabel = document.getElementById('rateLabel');
+    const timePeriodLabel = document.getElementById('timePeriodLabel');
+    const monthlyInterestCalculatorLink = document.getElementById('monthlyInterestCalculatorLink');
+    const fdCalculatorLink = document.getElementById('fdCalculatorLink');
+    const loanCalculatorLink = document.getElementById('loanCalculatorLink');
+    const howToCalculateMonthlyDiv = document.getElementById('howToCalculateMonthly');
+    const howToCalculateFDDiv = document.getElementById('howToCalculateFD');
+    const howToCalculateLoanDiv = document.getElementById('howToCalculateLoan');
+    const receiptMainTitle = document.getElementById('receiptMainTitle');
+    const receiptDetailsSection = document.getElementById('receiptDetailsSection');
+    const receiptResultsSection = document.getElementById('receiptResultsSection');
+    const receiptFinalAmountSection = document.getElementById('receiptFinalAmountSection');
     const receiptDateTimeSpan = document.getElementById('receiptDateTime');
     const currentYearSpan = document.getElementById('currentYear');
+    const footerCurrentYearSpan = document.getElementById('footerCurrentYear');
 
     function clearResults() {
-        if (resultsAndChartSection) resultsAndChartSection.style.display = 'none';
+        resultsAndChartSection.style.display = 'none';
         calculationResultsDiv.innerHTML = '';
         resultMessageDiv.textContent = '';
         showPrintButton.style.display = 'none';
-        if(yellowBackgroundSectionDiv) yellowBackgroundSectionDiv.style.display = 'none';
-
-        if (chartContainer) {
-            chartContainer.style.display = 'none';
-        }
+        yellowBackgroundSectionDiv.style.display = 'none';
+        chartContainer.style.display = 'none';
         if (myDonutChart) {
             myDonutChart.destroy();
             myDonutChart = null;
         }
-
-        receiptClientNameSpan.textContent = '';
-        receiptAmountSpan.textContent = '';
-        receiptRateSpan.textContent = '';
-        receiptTimePeriodSpan.textContent = '';
-        receiptMonthlyInterestSpan.textContent = '';
-        receiptTotalInterestSpan.textContent = '';
-        receiptFinalAmountSpan.textContent = '';
-        receiptDateTimeSpan.textContent = '';
     }
 
     function clearAll() {
-        clientNameInput.value = '';
         amountInput.value = '';
         rateInput.value = '';
         timePeriodInput.value = '';
         unitMonthsRadio.checked = true;
-        nameErrorSpan.textContent = '';
         amountErrorSpan.textContent = '';
         rateErrorSpan.textContent = '';
         timePeriodErrorSpan.textContent = '';
-
         clearResults();
     }
-     if (clientNameInput) {
-          clientNameInput.addEventListener('input', function() {
-              nameErrorSpan.textContent = '';
-              clearResults();
-          });
-     }
-     if (amountInput) {
-          amountInput.addEventListener('input', function() {
-              amountErrorSpan.textContent = '';
-              clearResults();
-          });
-     }
-     if (rateInput) {
-          rateInput.addEventListener('input', function() {
-               rateErrorSpan.textContent = '';
-               clearResults();
-          });
-     }
-     if (timePeriodInput) {
-          timePeriodInput.addEventListener('input', function() {
-               timePeriodErrorSpan.textContent = '';
-               clearResults();
-          });
-     }
-     if (unitMonthsRadio) {
-          unitMonthsRadio.addEventListener('change', function() {
-               timePeriodErrorSpan.textContent = '';
-               clearResults();
-          });
-     }
-     if (unitYearsRadio) {
-          unitYearsRadio.addEventListener('change', function() {
-               timePeriodErrorSpan.textContent = '';
-               clearResults();
-          });
-     }
 
-    if (calculateBtn) {
-        calculateBtn.addEventListener('click', calculate);
+    function setHowToVisibility() {
+        howToCalculateMonthlyDiv.style.display = currentCalculatorMode === 'monthly' ? 'block' : 'none';
+        howToCalculateFDDiv.style.display = currentCalculatorMode === 'fd' ? 'block' : 'none';
+        howToCalculateLoanDiv.style.display = currentCalculatorMode === 'loan' ? 'block' : 'none';
     }
 
-    if (clearBtn) {
-        clearBtn.addEventListener('click', clearAll);
+    // UPDATED FUNCTION: to prevent clearing on first load
+    function switchToMonthlyMode(isInitialLoad = false) {
+        currentCalculatorMode = 'monthly';
+        calculatorTitle.textContent = 'Monthly Interest Calculator';
+        amountLabel.textContent = 'Principal Amount (₹)';
+        rateLabel.textContent = 'Monthly Interest Rate (%)';
+        timePeriodLabel.textContent = 'Time Period';
+        setHowToVisibility();
+        if (!isInitialLoad) { // Only clear if not the first time
+            clearAll();
+        }
+        closeSidebar();
     }
 
-    if (showPrintButton) {
-        showPrintButton.addEventListener('click', function() {
-            window.print();
-        });
+    function switchToFDMode() {
+        currentCalculatorMode = 'fd';
+        calculatorTitle.textContent = 'FD Interest Calculator';
+        amountLabel.textContent = 'Investment (₹)';
+        rateLabel.textContent = 'Annual Interest Rate (%)';
+        timePeriodLabel.textContent = 'Time Period';
+        setHowToVisibility();
+        clearAll();
+        closeSidebar();
     }
+
+    function switchToLoanMode() {
+        currentCalculatorMode = 'loan';
+        calculatorTitle.textContent = 'Loan EMI Calculator';
+        amountLabel.textContent = 'Loan Amount (₹)';
+        rateLabel.textContent = 'Annual Interest Rate (%)';
+        timePeriodLabel.textContent = 'Loan Tenure';
+        setHowToVisibility();
+        clearAll();
+        closeSidebar();
+    }
+    
+    amountInput.addEventListener('input', () => { amountErrorSpan.textContent = ''; clearResults(); });
+    rateInput.addEventListener('input', () => { rateErrorSpan.textContent = ''; clearResults(); });
+    timePeriodInput.addEventListener('input', () => { timePeriodErrorSpan.textContent = ''; clearResults(); });
+    unitMonthsRadio.addEventListener('change', () => { clearResults(); });
+    unitYearsRadio.addEventListener('change', () => { clearResults(); });
+    calculateBtn.addEventListener('click', calculate);
+    clearBtn.addEventListener('click', clearAll);
+    showPrintButton.addEventListener('click', () => window.print());
+    
+    monthlyInterestCalculatorLink.addEventListener('click', switchToMonthlyMode);
+    fdCalculatorLink.addEventListener('click', switchToFDMode);
+    loanCalculatorLink.addEventListener('click', switchToLoanMode);
 
     function calculate(){
       clearResults();
-      nameErrorSpan.textContent = '';
       amountErrorSpan.textContent = '';
       rateErrorSpan.textContent = '';
       timePeriodErrorSpan.textContent = '';
 
-      const clientName = clientNameInput.value.trim();
-      const amount = parseFloat(amountInput.value);
-      const rate = parseFloat(rateInput.value);
+      const principal = parseFloat(amountInput.value);
+      const rateValue = parseFloat(rateInput.value);
       const timePeriodValue = parseFloat(timePeriodInput.value);
       const timeUnit = document.querySelector('input[name="timeUnit"]:checked').value;
 
       let isValid = true;
-      const unitLabel = timeUnit === 'months' ? 'Months' : 'Years';
+      let principalLabel = 'Principal';
+      if(currentCalculatorMode === 'fd') principalLabel = 'Investment';
+      if(currentCalculatorMode === 'loan') principalLabel = 'Loan Amount';
 
-      if (!clientName) {
-          nameErrorSpan.textContent = 'Please enter a name.';
+      if (isNaN(principal) || principal <= 0) {
+          amountErrorSpan.textContent = `Please enter a valid ${principalLabel}.`;
           isValid = false;
       }
-      if (isNaN(amount) || amount <= 0) {
-          amountErrorSpan.textContent = 'Please enter a valid Investment.';
-          isValid = false;
-      }
-      if (isNaN(rate) || rate < 0) {
-          rateErrorSpan.textContent = 'Please enter a valid monthly interest rate.';
+      if (isNaN(rateValue) || rateValue < 0) {
+          rateErrorSpan.textContent = 'Please enter a valid interest rate.';
           isValid = false;
       }
       if (isNaN(timePeriodValue) || timePeriodValue <= 0) {
-           timePeriodErrorSpan.textContent = `Please enter a valid time period in ${unitLabel.toLowerCase()}.`;
-           isValid = false;
-      } else if (timeUnit === 'years' && !Number.isInteger(timePeriodValue)) {
-           timePeriodErrorSpan.textContent = 'Time period must be a whole number when entered in years.';
+           timePeriodErrorSpan.textContent = `Please enter a valid time period.`;
            isValid = false;
       }
 
@@ -926,192 +799,132 @@
           resultMessageDiv.textContent = 'Please check the entered information.';
           return;
       }
+      
+      let totalMonths = timeUnit === 'years' ? timePeriodValue * 12 : timePeriodValue;
+      let timePeriodDisplay = `${Math.round(timePeriodValue)} ${timeUnit.charAt(0).toUpperCase() + timeUnit.slice(1)}`;
+      resultsAndChartSection.style.display = 'block';
+      
+      let chartData, chartLabels, resultCardHTML, receiptDetailsHTML, receiptResultsHTML, receiptFinalHTML;
 
-      const monthlyRate = rate;
-      const rateDisplay = `${rate}% (Monthly)`;
-
-      let totalMonths = timePeriodValue;
-      let timePeriodDisplay = `${Math.round(timePeriodValue)} `;
-
-      if (timeUnit === 'years') {
-          totalMonths = timePeriodValue * 12;
-          timePeriodDisplay += 'Years';
-      } else {
-          timePeriodDisplay += 'Months';
+      switch(currentCalculatorMode) {
+        case 'monthly': {
+          const monthlyRate = rateValue;
+          const monthlyInterest = (principal * monthlyRate) / 100;
+          const totalInterest = monthlyInterest * totalMonths;
+          const finalAmount = principal + totalInterest;
+          const annualRateEquivalent = monthlyRate * 12;
+          chartData = [principal, totalInterest];
+          chartLabels = ['Principal', 'Total Interest'];
+          resultCardHTML = `<div class="investment-card"><div class="header"><i class="fa-solid fa-wallet"></i><span>Final Amount</span></div><p class="total-amount-value">₹${formatCurrency(finalAmount)}</p><hr><div class="details-grid"><div class="detail-item"><div class="header"><i class="fa-solid fa-building-columns"></i><span>Principal</span></div><p class="detail-value">₹${formatCurrency(principal)}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-arrow-trend-up"></i><span>Total Interest</span></div><p class="detail-value highlight">₹${formatCurrency(totalInterest)}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-percent"></i><span>Monthly Rate</span></div><p class="detail-value">${monthlyRate}%</p></div><div class="detail-item"><div class="header"><i class="fa-regular fa-calendar-days"></i><span>Time Period</span></div><p class="detail-value">${timePeriodDisplay}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-money-bill-trend-up"></i><span>Monthly Interest</span></div><p class="detail-value">₹${formatCurrency(monthlyInterest)}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-chart-line"></i><span>Annual Rate (Eq.)</span></div><p class="detail-value">${formatCurrency(annualRateEquivalent)}%</p></div></div></div>`;
+          receiptMainTitle.textContent = 'Monthly Interest Calculation Receipt';
+          receiptDetailsHTML = `<h3 class="section-title">Calculation Details</h3><div class="detail-row"><span class="label">Principal Amount:</span><span class="value">₹${formatCurrency(principal)}</span></div><div class="detail-row"><span class="label">Monthly Interest Rate:</span><span class="value">${monthlyRate}%</span></div><div class="detail-row"><span class="label">Time Period:</span><span class="value">${timePeriodDisplay}</span></div>`;
+          receiptResultsHTML = `<h3 class="section-title">Results</h3><div class="detail-row"><span class="label">Monthly Interest:</span><span class="value">₹${formatCurrency(monthlyInterest)}</span></div><div class="detail-row"><span class="label">Total Interest:</span><span class="value">₹${formatCurrency(totalInterest)}</span></div>`;
+          receiptFinalHTML = `<div class="final-amount-row-item"><span class="label">Final Amount:</span><span class="value">₹${formatCurrency(finalAmount)}</span></div>`;
+          break;
+        }
+        case 'fd': {
+          const annualRate = rateValue;
+          const monthlyRatePercentage = annualRate / 12;
+          const monthlyInterest = (principal * monthlyRatePercentage) / 100;
+          const totalInterest = monthlyInterest * totalMonths;
+          const finalAmount = principal + totalInterest;
+          chartData = [principal, totalInterest];
+          chartLabels = ['Principal', 'Total Interest'];
+          resultCardHTML = `<div class="investment-card"><div class="header"><i class="fa-solid fa-wallet"></i><span>Final Amount</span></div><p class="total-amount-value">₹${formatCurrency(finalAmount)}</p><hr><div class="details-grid"><div class="detail-item"><div class="header"><i class="fa-solid fa-building-columns"></i><span>Investment</span></div><p class="detail-value">₹${formatCurrency(principal)}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-arrow-trend-up"></i><span>Total Interest</span></div><p class="detail-value highlight">₹${formatCurrency(totalInterest)}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-percent"></i><span>Annual Rate</span></div><p class="detail-value">${annualRate}%</p></div><div class="detail-item"><div class="header"><i class="fa-regular fa-calendar-days"></i><span>Time Period</span></div><p class="detail-value">${timePeriodDisplay}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-money-bill-trend-up"></i><span>Monthly Interest</span></div><p class="detail-value">₹${formatCurrency(monthlyInterest)}</p></div></div></div>`;
+          receiptMainTitle.textContent = 'FD Interest Calculation Receipt';
+          receiptDetailsHTML = `<h3 class="section-title">Calculation Details</h3><div class="detail-row"><span class="label">Investment:</span><span class="value">₹${formatCurrency(principal)}</span></div><div class="detail-row"><span class="label">Annual Interest Rate:</span><span class="value">${annualRate}%</span></div><div class="detail-row"><span class="label">Time Period:</span><span class="value">${timePeriodDisplay}</span></div>`;
+          receiptResultsHTML = `<h3 class="section-title">Results</h3><div class="detail-row"><span class="label">Monthly Interest:</span><span class="value">₹${formatCurrency(monthlyInterest)}</span></div><div class="detail-row"><span class="label">Total Interest:</span><span class="value">₹${formatCurrency(totalInterest)}</span></div>`;
+          receiptFinalHTML = `<div class="final-amount-row-item"><span class="label">Final Amount:</span><span class="value">₹${formatCurrency(finalAmount)}</span></div>`;
+          break;
+        }
+        case 'loan': {
+          const annualRate = rateValue;
+          const monthlyRateDecimal = (annualRate / 12) / 100;
+          const emi = (principal * monthlyRateDecimal * Math.pow(1 + monthlyRateDecimal, totalMonths)) / (Math.pow(1 + monthlyRateDecimal, totalMonths) - 1);
+          const totalPayment = emi * totalMonths;
+          const totalInterest = totalPayment - principal;
+          chartData = [principal, totalInterest];
+          chartLabels = ['Loan Amount', 'Total Interest'];
+          resultCardHTML = `<div class="investment-card"><div class="header"><i class="fa-solid fa-file-invoice-dollar"></i><span>Monthly EMI</span></div><p class="total-amount-value">₹${formatCurrency(emi)}</p><hr><div class="details-grid"><div class="detail-item"><div class="header"><i class="fa-solid fa-hand-holding-dollar"></i><span>Loan Amount</span></div><p class="detail-value">₹${formatCurrency(principal)}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-arrow-trend-up"></i><span>Total Interest</span></div><p class="detail-value highlight">₹${formatCurrency(totalInterest)}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-wallet"></i><span>Total Payment</span></div><p class="detail-value">₹${formatCurrency(totalPayment)}</p></div><div class="detail-item"><div class="header"><i class="fa-regular fa-calendar-days"></i><span>Loan Tenure</span></div><p class="detail-value">${timePeriodDisplay}</p></div><div class="detail-item"><div class="header"><i class="fa-solid fa-percent"></i><span>Annual Rate</span></div><p class="detail-value">${annualRate}%</p></div></div></div>`;
+          receiptMainTitle.textContent = 'Loan EMI Calculation Receipt';
+          receiptDetailsHTML = `<h3 class="section-title">Calculation Details</h3><div class="detail-row"><span class="label">Loan Amount:</span><span class="value">₹${formatCurrency(principal)}</span></div><div class="detail-row"><span class="label">Annual Interest Rate:</span><span class="value">${annualRate}%</span></div><div class="detail-row"><span class="label">Loan Tenure:</span><span class="value">${timePeriodDisplay}</span></div>`;
+          receiptResultsHTML = `<h3 class="section-title">Results</h3><div class="detail-row"><span class="label">Total Interest Paid:</span><span class="value">₹${formatCurrency(totalInterest)}</span></div><div class="detail-row"><span class="label">Total Payment:</span><span class="value">₹${formatCurrency(totalPayment)}</span></div>`;
+          receiptFinalHTML = `<div class="final-amount-row-item"><span class="label">Monthly EMI:</span><span class="value">₹${formatCurrency(emi)}</span></div>`;
+          break;
+        }
       }
+      
+      calculationResultsDiv.innerHTML = resultCardHTML;
+      receiptDetailsSection.innerHTML = receiptDetailsHTML;
+      receiptResultsSection.innerHTML = receiptResultsHTML;
+      receiptFinalAmountSection.innerHTML = receiptFinalHTML;
 
-      const mi = (amount * monthlyRate) / 100;
-      const ti = mi * totalMonths;
-      const total = amount + ti;
-
-      if (myDonutChart) {
-          myDonutChart.destroy();
-      }
-
-      if (resultsAndChartSection) resultsAndChartSection.style.display = 'block';
-
-      if (chartContainer && amount > 0) {
+      if (myDonutChart) myDonutChart.destroy();
+      if (chartContainer && principal > 0) {
           const ctx = document.getElementById('interestChart').getContext('2d');
           myDonutChart = new Chart(ctx, {
               type: 'doughnut',
               data: {
-                  labels: ['Principal', 'Total Interest'],
+                  labels: chartLabels,
                   datasets: [{
-                      label: 'Amount Distribution',
-                      data: [amount, ti],
-                      backgroundColor: [
-                          '#22c55e',
-                          '#bbf7d1'
-                      ],
-                      borderColor: '#fff',
-                      borderWidth: 2
+                      data: chartData, backgroundColor: ['#22c55e', '#bbf7d1'],
+                      borderColor: '#fff', borderWidth: 2
                   }]
               },
               options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  cutout: '50%',
-                  animation: false,
+                  responsive: true, maintainAspectRatio: false, cutout: '50%', animation: false,
                   plugins: {
                       datalabels: {
                           formatter: (value, context) => {
-                              const datapoints = context.chart.data.datasets[0].data;
-                              const totalValue = datapoints.reduce((total, datapoint) => total + datapoint, 0);
-                              const percentage = (value / totalValue) * 100;
+                              const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                              const percentage = (value / total) * 100;
                               return percentage > 1 ? percentage.toFixed(1) + '%' : '';
                           },
-                          color: '#fff',
-                          font: {
-                              weight: 'bold',
-                              size: 14,
-                          }
+                          color: '#fff', font: { weight: 'bold', size: 14 }
                       },
-                      legend: {
-                          position: 'bottom',
-                          labels: {
-                              color: '#16a34a',
-                              font: {
-                                  family: "'Teko', sans-serif"
-                              },
-                              generateLabels: function(chart) {
-                                  const original = Chart.overrides.pie.plugins.legend.labels.generateLabels;
-                                  const labels = original.call(this, chart);
-
-                                  let dataset = chart.data.datasets[0];
-                                  let totalValue = dataset.data.reduce((sum, data) => sum + data, 0);
-
-                                  labels.forEach(label => {
-                                      if (totalValue > 0) {
-                                          let value = dataset.data[label.index];
-                                          let percentage = (value / totalValue * 100).toFixed(1);
-                                          label.text += ` (${percentage}%)`;
-                                      }
-                                  });
-                                  return labels;
-                              }
-                          }
-                      },
-                      title: {
-                        display: true,
-                        text: 'Principal and Interest Distribution',
-                        color: '#16a34a',
-                        font: {
-                            size: 16,
-                            family: "'Teko', sans-serif"
-                        },
-                        padding: {
-                            bottom: 10
-                        }
-                      }
+                      legend: { position: 'bottom', labels: { color: '#16a34a', font: { family: "'Teko', sans-serif" }}},
+                      title: { display: true, text: 'Principal and Interest Distribution', color: '#16a34a', font: { size: 16, family: "'Teko', sans-serif" }, padding: { bottom: 10 }}
                   }
               }
           });
           chartContainer.style.display = 'block';
       }
 
-      const resultCardHTML = `
-        <div class="investment-card">
-            <div class="card-section">
-                <div class="header">
-                    <i class="fa-solid fa-wallet"></i>
-                    <span>Total Amount</span>
-                </div>
-                <p class="total-amount-value">₹${formatCurrency(total)}</p>
-            </div>
-            <hr>
-            <div class="details-grid">
-                <div class="detail-item">
-                    <div class="header">
-                        <i class="fa-solid fa-user"></i>
-                        <span>Name</span>
-                    </div>
-                    <p class="detail-value">${clientName}</p>
-                </div>
-                <div class="detail-item">
-                    <div class="header">
-                        <i class="fa-solid fa-building-columns"></i>
-                        <span>Investment</span>
-                    </div>
-                    <p class="detail-value">₹${formatCurrency(amount)}</p>
-                </div>
-                <div class="detail-item">
-                    <div class="header">
-                        <i class="fa-solid fa-arrow-trend-up"></i>
-                        <span>Total Interest</span>
-                    </div>
-                    <p class="detail-value highlight">₹${formatCurrency(ti)}</p>
-                </div>
-                <div class="detail-item">
-                    <div class="header">
-                        <i class="fa-solid fa-percent"></i>
-                        <span>Monthly Rate</span>
-                    </div>
-                    <p class="detail-value">${rate}%</p>
-                </div>
-                <div class="detail-item">
-                    <div class="header">
-                        <i class="fa-regular fa-calendar-days"></i>
-                        <span>Time Period</span>
-                    </div>
-                    <p class="detail-value">${timePeriodDisplay}</p>
-                </div>
-                <div class="detail-item">
-                    <div class="header">
-                        <i class="fa-solid fa-money-bill-trend-up"></i>
-                        <span>Monthly Interest</span>
-                    </div>
-                    <p class="detail-value">₹${formatCurrency(mi)}</p>
-                </div>
-            </div>
-        </div>
-      `;
-
-      calculationResultsDiv.innerHTML = resultCardHTML;
-
       const currentDate = new Date();
-      const formattedDateTime = formatEnglishDateTime(currentDate);
-
-      receiptClientNameSpan.textContent = clientName;
-      receiptAmountSpan.textContent = `₹${formatCurrency(amount)}`;
-      receiptRateSpan.textContent = rateDisplay;
-      receiptTimePeriodSpan.textContent = timePeriodDisplay;
-      receiptMonthlyInterestSpan.textContent = `₹${formatCurrency(mi)}`;
-      receiptTotalInterestSpan.textContent = `₹${formatCurrency(ti)}`;
-      receiptFinalAmountSpan.textContent = `₹${formatCurrency(total)}`;
-      receiptDateTimeSpan.textContent = formattedDateTime;
+      receiptDateTimeSpan.textContent = formatEnglishDateTime(currentDate);
       currentYearSpan.textContent = currentDate.getFullYear();
-
       resultMessageDiv.textContent = 'Calculation Complete!';
-
-      if(yellowBackgroundSectionDiv) yellowBackgroundSectionDiv.style.display = 'block';
-      if(showPrintButton) showPrintButton.style.display = 'flex';
-
+      yellowBackgroundSectionDiv.style.display = 'block';
+      showPrintButton.style.display = 'flex';
     }
 
-     if (currentYearSpan) {
-        currentYearSpan.textContent = new Date().getFullYear();
+     if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
+     if (footerCurrentYearSpan) footerCurrentYearSpan.textContent = new Date().getFullYear();
+
+     const hamburgerBtn = document.getElementById('hamburgerBtn');
+     const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+     const sidebar = document.getElementById('sidebar');
+     const overlay = document.getElementById('overlay');
+
+     function openSidebar() {
+         sidebar.classList.remove('-translate-x-full');
+         overlay.classList.remove('hidden');
      }
 
+     function closeSidebar() {
+         sidebar.classList.add('-translate-x-full');
+         overlay.classList.add('hidden');
+     }
+
+     if (hamburgerBtn) hamburgerBtn.addEventListener('click', openSidebar);
+     if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', closeSidebar);
+     if (overlay) overlay.addEventListener('click', closeSidebar);
+
+     // UPDATED: Automatically set up and calculate on page load
+     document.addEventListener('DOMContentLoaded', () => {
+        switchToMonthlyMode(true); // Set up UI without clearing inputs
+        calculate(); // Perform calculation with default values
+     });
   </script>
 </body>
 </html>
